@@ -126,7 +126,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 		new Thread() {
 			public void run() {
 				try {
-					Thread.sleep(8000);
+					Thread.sleep(7000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
