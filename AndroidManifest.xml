@@ -43,6 +43,9 @@
         <activity
             android:name="com.tapjoy.SingleVideoTJCOffersWebView"
             android:configChanges="orientation|keyboardHidden|screenSize" />
+         <activity
+            android:name="com.tapjoy.ManyVideoTJCOffersWebView"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name="com.tapjoy.NoScrollTJCOffersWebView"
             android:configChanges="orientation|keyboardHidden|screenSize" />
