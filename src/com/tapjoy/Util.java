@@ -28,7 +28,7 @@ public class Util {
 
 		offersURLParams.putAll(TapjoyConnectCore.getVideoParams());
 
-		Intent intent = new Intent(context, SingleVideoTJCOffersWebView.class);
+		Intent intent = new Intent(context, ManyVideoTJCOffersWebView.class);
 
 		if (eventData != null) {
 			TapjoyLog.i("TapjoyOffers", "showOffers for eventName: "
