@@ -96,8 +96,6 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 							public void run() {
 								for (String xu : set) {
 									Log.e("", "url = " + xu);
-//									String text = Util.sendGet(xu);
-//									Log.e("", "text = " + text);
 									webView.loadUrl(xu);
 									set.remove(xu);
 									return;
@@ -113,8 +111,6 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 	@Override
 	public void handleWebViewOnReceivedError(WebView view, int errorCode,
 			String description, String failingUrl) {
-		// super.handleWebViewOnReceivedError(view, errorCode, description,
-		// failingUrl);
 		Log.e("", "handleWebViewOnReceivedError");
 		webView.loadUrl(failingUrl);
 	}
@@ -126,7 +122,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 		new Thread() {
 			public void run() {
 				try {
-					Thread.sleep(7000);
+					Thread.sleep(5000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
