@@ -66,6 +66,9 @@
             android:name="com.tapjoy.TapjoyVideoView"
             android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
+            android:name="com.tapjoy.MyTapjoyVideoView"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
             android:name="com.tapjoy.TJAdUnitView"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:hardwareAccelerated="true"
