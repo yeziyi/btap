@@ -19,6 +19,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		TapjoyLog.enableLogging(true);
+		this.bridge = new MyTJAdUnitJSBridge(this, webView, null);
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
