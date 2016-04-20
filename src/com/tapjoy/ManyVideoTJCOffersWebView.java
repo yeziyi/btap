@@ -52,6 +52,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
 					final String url) {
+				Log.e("test", "shouldOverrideUrlLoading url = " + url);
 				if (!startclick) {
 					startclick = true;
 					handleWebViewOnPageFinished(view, url);
