@@ -5,6 +5,8 @@ import java.util.Set;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.webkit.WebView;
@@ -15,6 +17,32 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 	private Set<String> set = new HashSet<String>();
 	private long downTime = System.currentTimeMillis();
 
+	private boolean startclick = false;
+	private Handler mHandler = new Handler(Looper.getMainLooper());
+	private Runnable mRunnable = new Runnable() {
+
+		@Override
+		public void run() {
+			mHandler.removeCallbacks(this);
+			mHandler.removeCallbacks(mRunnable);
+			if (startclick) {
+				return;
+			}
+			long downTime = System.currentTimeMillis();
+			webView.dispatchTouchEvent(MotionEvent.obtain(downTime, downTime,
+					MotionEvent.ACTION_DOWN, 400, 400, 0));
+			try {
+				Thread.sleep(120);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			webView.dispatchTouchEvent(MotionEvent.obtain(downTime,
+					System.currentTimeMillis(), MotionEvent.ACTION_UP, 400,
+					400, 0));
+			mHandler.postDelayed(this, 1000);
+		}
+	};
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +52,11 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view,
 					final String url) {
+				if (!startclick) {
+					startclick = true;
+					handleWebViewOnPageFinished(view, url);
+					return true;
+				}
 				if (url.contains("ws.tapjoyads.com/videos")) {
 					set.add(url);
 				}
@@ -37,12 +70,8 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 				return true;
 			}
 
-			@Override
-			public void onPageFinished(WebView view, String url) {
-				super.onPageFinished(view, url);
-				handleWebViewOnPageFinished(view, url);
-			}
 		});
+		mHandler.postDelayed(mRunnable, 1000);
 	}
 
 	@Override
