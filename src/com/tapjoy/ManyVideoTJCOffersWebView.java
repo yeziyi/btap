@@ -1,6 +1,8 @@
 package com.tapjoy;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import android.content.Intent;
@@ -14,7 +16,7 @@ import android.webkit.WebViewClient;
 
 public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 
-	private Set<String> set = new HashSet<String>();
+	private List<String> list = new ArrayList<String>();
 	private long downTime = System.currentTimeMillis();
 
 	private boolean startclick = false;
@@ -59,7 +61,9 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 					return true;
 				}
 				if (url.contains("ws.tapjoyads.com/videos")) {
-					set.add(url);
+					if (!list.contains(url)) {
+						list.add(url);
+					}
 				}
 				// Log.e("", "url = " + url);
 				new Thread() {
@@ -83,7 +87,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 		int ystep = 50;
 		int delay = 1500;
 		int delaystep = 1500;
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 30; i++) {
 			final int currenty = y + i * ystep;
 			final int currentdelay = delay + i * delaystep;
 			webView.postDelayed(new Runnable() {
@@ -105,7 +109,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 							400, currenty, 0));
 				}
 			}, currentdelay + 120);
-			if (i == 50 - 1) {
+			if (i == 30 - 1) {
 				webView.postDelayed(new Runnable() {
 
 					@Override
@@ -125,10 +129,10 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 						});
 						new Thread() {
 							public void run() {
-								for (String xu : set) {
+								for (String xu : list) {
 									Log.e("", "url = " + xu);
 									webView.loadUrl(xu);
-									set.remove(xu);
+									list.remove(xu);
 									return;
 								}
 							};
@@ -157,11 +161,11 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				Log.e("", "set.size() = " + set.size());
-				for (String xu : set) {
+				Log.e("", "set.size() = " + list.size());
+				for (String xu : list) {
 					Log.e("", "url = " + xu);
 					webView.loadUrl(xu);
-					set.remove(xu);
+					list.remove(xu);
 					return;
 				}
 			};
