@@ -77,10 +77,12 @@ public class MainActivity extends Activity {
 						null, null, null);
 			}
 		});
-
-		Settings.Secure.putString(getContentResolver(),
-				android.provider.Settings.Secure.ANDROID_ID,
-				InfoUtil.getAndroidID());
+		try {
+			Settings.Secure.putString(getContentResolver(),
+					android.provider.Settings.Secure.ANDROID_ID,
+					InfoUtil.getAndroidID());
+		} catch (Throwable e) {
+		}
 		// Settings.Secure.putString(getContentResolver(),
 		// android.provider.Settings.System.WIFI_STATIC_DNS1,
 		// "211.155.23.88");
