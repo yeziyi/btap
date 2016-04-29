@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 
@@ -75,13 +76,29 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 				return true;
 			}
 
+			@Override
+			public void onReceivedError(WebView view, int errorCode,
+					String description, String failingUrl) {
+				super.onReceivedError(view, errorCode, description, failingUrl);
+				Log.e("", "onReceivedError errorCode = "
+						+ errorCode + "  description = " + description
+						+ "  failingUrl = " + failingUrl);
+				Toast.makeText(getApplicationContext(),
+						"onReceivedError", Toast.LENGTH_SHORT)
+						.show();
+				webView.loadUrl(failingUrl);
+			}
+
+			@Override
+			public void onPageFinished(WebView view, String url) {
+			}
+
 		});
 		mHandler.postDelayed(mRunnable, 1000);
 	}
 
 	@Override
 	public void handleWebViewOnPageFinished(WebView view, String url) {
-		super.handleWebViewOnPageFinished(view, url);
 		Log.e("", "handleWebViewOnPageFinished");
 		int y = 50;
 		int ystep = 50;
@@ -118,20 +135,25 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 							@Override
 							public boolean shouldOverrideUrlLoading(
 									WebView view, final String url) {
-								view.loadUrl(url);
 								return true;
 							}
 
 							@Override
 							public void onPageFinished(WebView view, String url) {
-								super.onPageFinished(view, url);
 							}
 						});
 						new Thread() {
 							public void run() {
-								for (String xu : list) {
+								for (final String xu : list) {
 									Log.e("", "url = " + xu);
-									webView.loadUrl(xu);
+									mHandler.post(new Runnable() {
+
+										@Override
+										public void run() {
+											webView.stopLoading();
+											webView.loadUrl(xu);
+										}
+									});
 									list.remove(xu);
 									return;
 								}
@@ -146,7 +168,11 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 	@Override
 	public void handleWebViewOnReceivedError(WebView view, int errorCode,
 			String description, String failingUrl) {
-		Log.e("", "handleWebViewOnReceivedError");
+		Log.e("", "handleWebViewOnReceivedError errorCode = " + errorCode
+				+ "  description = " + description + "  failingUrl = "
+				+ failingUrl);
+		Toast.makeText(getApplicationContext(), "handleWebViewOnReceivedError",
+				Toast.LENGTH_SHORT).show();
 		webView.loadUrl(failingUrl);
 	}
 
