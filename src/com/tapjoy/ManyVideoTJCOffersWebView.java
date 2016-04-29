@@ -135,7 +135,7 @@ public class ManyVideoTJCOffersWebView extends TJCOffersWebView {
 							@Override
 							public boolean shouldOverrideUrlLoading(
 									WebView view, final String url) {
-								return true;
+								return false;
 							}
 
 							@Override
